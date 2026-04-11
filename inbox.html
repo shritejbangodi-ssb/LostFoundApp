@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>Messages</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<style>
+.thread { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 16px; margin-bottom: 12px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+.thread:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #a855f7, #0ea5e9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: white; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3); }
+.thread-info { flex: 1; overflow: hidden; }
+.thread-user { font-weight: 800; font-size: 16px; margin: 0 0 5px; color: white; }
+.thread-msg { font-size: 14px; color: #cbd5e1; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<div class="app">
+    <div class="uploadNav">
+        <button class="uploadBackBtn" onclick="window.history.back()">←</button>
+    </div>
+    <h2 class="pageTitle">💬 Inbox</h2>
+    <div class="contentArea">
+        <div id="inboxList"></div>
+    </div>
+</div>
+<script src="app.js?v=4"></script>
+<script>
+    const currentUser = localStorage.getItem("loggedInUser");
+    if(!currentUser) window.location.href="login.html";
+
+    const inboxList = document.getElementById("inboxList");
+    
+    // IMMEDIATELY render cached data on open so speed is 0 milliseconds!
+    let cachedInbox = localStorage.getItem("cached_inbox_items");
+    if (cachedInbox) {
+        inboxList.innerHTML = cachedInbox;
+    } else {
+        inboxList.innerHTML = `<p style='text-align:center;color:white;'>Loading messages...</p>`;
+    }
+
+    window.db.collection("inbox").where("participants", "array-contains", currentUser)
+        .orderBy("timestamp", "desc")
+        .onSnapshot(snapshot => {
+            let htmlContent = "";
+            if(snapshot.empty){
+                htmlContent = `<p style='text-align:center;color:#94a3b8;margin-top:20px;'>No active chats.</p>`;
+                inboxList.innerHTML = htmlContent;
+                localStorage.setItem("cached_inbox_items", htmlContent);
+                return;
+            }
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                let otherUser = data.participants.find(u => u !== currentUser);
+                if (!otherUser) otherUser = currentUser;
+                const initial = otherUser.charAt(0).toUpperCase();
+                const prefix = data.lastSender === currentUser ? "You: " : "";
+                
+                htmlContent += `
+                    <div class="thread" onclick="openChat('${otherUser}')">
+                        <div class="avatar">${initial}</div>
+                        <div class="thread-info">
+                            <h3 class="thread-user">${otherUser}</h3>
+                            <p class="thread-msg">${prefix}${data.lastMessage}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            inboxList.innerHTML = htmlContent;
+            localStorage.setItem("cached_inbox_items", htmlContent);
+        }, err => console.error(err));
+</script>
+</body>
+</html>

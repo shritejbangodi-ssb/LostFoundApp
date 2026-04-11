@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <title>Lost & Found</title>
+    <link rel="stylesheet" href="style.css?v=4">
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-init.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <header class="mainHeader">
+            <div class="profileCircle" onclick="toggleProfile()">👤</div>
+            <h1 class="mainTitle">LOST & FOUND</h1>
+        </header>
+        <div class="subHeaderCard">
+            <p class="subTitle">Smart Matching System</p>
+        </div>
+        <div id="profileMenu" class="profileMenu" style="display:none;">
+            <button class="closeBtn" onclick="closeProfile()">✕</button>
+            <div class="profileInfo">
+                <div class="profileIcon">👤</div>
+                <h3 id="usernameDisplay"></h3>
+            </div>
+            <div class="profileActions">
+                <button class="menuBtn" id="adminBtn" style="display:none;"
+                    onclick="window.location.href='admin.html'">⚙️ Admin Panel</button>
+                <button class="menuBtn" onclick="openFeedback()">Feedback</button>
+                <button class="menuBtn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <div class="contentArea">
+            <div class="card">
+                <button onclick="openLost()">📤 Report Lost Item</button>
+                <button onclick="openFound()">📥 Report Found Item</button>
+            </div>
+            <div class="card">
+                <button onclick="viewLost()">📦 View Lost Items</button>
+                <button onclick="viewFound()">🔎 View Found Items</button>
+            </div>
+            <div class="card">
+                <button onclick="window.location.href='inbox.html'">💬 Messages</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="welcomeOverlay" class="welcomeOverlay" style="display:none;">
+        <div class="welcomeModal card">
+            <h3 class="welcomeTitle">Welcome</h3>
+            <img src="kindness.png" alt="Kindness connects us all" class="welcomeImg" />
+            <p class="welcomeMsg">"Be the good neighbor who hands it in. Kindness connects us all."</p>
+            <button class="navBtn closeWelcomeBtn" onclick="closeWelcomeOverlay()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="app.js?v=4"></script>
+    <script src="auth.js?v=4"></script>
+    <script>
+        if (!localStorage.getItem("loggedInUser")) { window.location.href = "login.html"; }
+        if (localStorage.getItem("loggedInUser") === "admin") {
+            document.getElementById("adminBtn").style.display = "block";
+        }
+
+        if (!sessionStorage.getItem('welcomeShown')) {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (overlay) overlay.style.display = 'flex';
+            sessionStorage.setItem('welcomeShown', 'true');
+        }
+
+        function closeWelcomeOverlay() {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

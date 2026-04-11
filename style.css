@@ -1,0 +1,1165 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ================= APP FRAME ================= */
+.app {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    min-height: 100vh;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= HEADER ================= */
+.mainHeader {
+    background: transparent;
+    padding: 30px 20px 50px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 10;
+}
+
+.profileCircle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profileCircle:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.mainTitle {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: transparent;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f43f5e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    white-space: nowrap;
+    letter-spacing: 1.5px;
+    text-shadow: 0 4px 20px rgba(236, 72, 153, 0.2);
+}
+
+/* ================= SUB HEADER ================= */
+.subHeaderCard {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    margin: -35px 20px 20px;
+    padding: 16px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 11;
+}
+
+.subTitle {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ================= CONTENT AREA ================= */
+.contentArea {
+    flex: 1;
+    padding: 10px 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ================= CARD ================= */
+.card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 22px;
+    padding: 22px;
+    margin: 10px 20px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    animation: shine 7s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 200%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card h3 {
+    margin: 10px 0 8px;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+    max-height: 250px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 10px;
+}
+
+.cardContainer {
+    margin-bottom: 25px;
+}
+
+.owner {
+    font-size: 14px;
+    color: #cbd5e1;
+    line-height: 1.6;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* ================= BUTTON ================= */
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+    margin-top: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(14, 165, 233, 0.5);
+}
+
+button:hover::before {
+    opacity: 1;
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.deleteBtn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+}
+
+.deleteBtn::before {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.menuBtn {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.menuBtn::before {
+    display: none;
+}
+
+.menuBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.logout {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+}
+
+.logout::before {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+}
+
+/* ================= PROFILE MENU ================= */
+.profileMenu {
+    position: absolute;
+    top: 85px;
+    left: 20px;
+    width: 280px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.15);
+    display: none;
+    z-index: 100;
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.profileMenu.show {
+    display: block;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profileInfo .profileIcon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+}
+
+.profileInfo h3 {
+    color: #fff;
+    margin: 0;
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+.closeBtn::before {
+    display: none;
+}
+
+.closeBtn:hover {
+    background: rgba(239, 68, 68, 0.8);
+    transform: rotate(90deg) scale(1.1);
+}
+
+.profileActions {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ================= UPLOAD PAGE ================= */
+.uploadHeader {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.uploadTitle {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: transparent;
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin: 0;
+    text-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+}
+
+.uploadSubtitle {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+/* ===== FORMS ===== */
+.form {
+    width: 100%;
+    padding: 0 25px;
+}
+
+.form input,
+.form textarea,
+.form input[type="file"] {
+    width: 100%;
+    display: block;
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form input:focus,
+.form textarea:focus {
+    outline: none;
+    border-color: #a855f7;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    transform: translateY(-2px);
+}
+
+.form textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #64748b;
+    font-weight: 400;
+}
+
+.form input[type="file"] {
+    padding: 12px 20px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.form input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    margin-right: 15px;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+.form input[type="file"]::file-selector-button:hover {
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Login/Signup Titles */
+h2 {
+    color: transparent;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-align: center;
+    font-size: 34px;
+    margin-top: 70px;
+    margin-bottom: 30px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.form p {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+.form p a {
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.form p a:hover {
+    color: #d8b4fe;
+    text-shadow: 0 0 10px rgba(216, 180, 254, 0.5);
+}
+
+/* ================= NAV BUTTONS ================= */
+.uploadNav,
+.matchNav {
+    position: relative;
+    height: 60px;
+    padding: 20px 25px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.uploadBackBtn,
+.navBtn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    width: auto;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.uploadBackBtn::before,
+.navBtn::before {
+    display: none;
+}
+
+.uploadBackBtn:hover,
+.navBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.matchTitle,
+.pageTitle {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 15px 0 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: transparent;
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= CHAT PAGE ================= */
+.chatPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.chatTitle {
+    text-align: center;
+    color: white;
+    margin: 20px 0;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+#chatBox {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Custom Scrollbar for Chat Box */
+#chatBox::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatBox::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#chatBox::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+#chatBox::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.message {
+    padding: 14px 20px;
+    border-radius: 22px;
+    max-width: 78%;
+    font-size: 15px;
+    line-height: 1.5;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.myMessage {
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+}
+
+.otherMessage {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+}
+
+.chatInputArea {
+    display: flex;
+    gap: 15px;
+    padding: 20px 25px 30px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(25px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chatInputArea input {
+    flex: 1;
+    padding: 16px 22px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 16px;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s;
+}
+
+.chatInputArea input:focus {
+    outline: none;
+    border-color: #ec4899;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.2);
+}
+
+.chatInputArea button {
+    width: auto;
+    padding: 16px 28px;
+    border-radius: 100px;
+    margin: 0;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+    background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+}
+
+.chatInputArea button::before {
+    background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+}
+
+/* ================= AUTH PAGES ================= */
+.authWrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.authBox {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.authBox::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    filter: blur(70px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.authBox::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    filter: blur(70px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.authLogo {
+    font-size: 55px;
+    margin-bottom: 10px;
+    text-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
+    display: inline-block;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.authTitle {
+    color: transparent;
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: 1px;
+}
+
+.authSubtitle {
+    color: #94a3b8;
+    font-size: 15px;
+    margin: 0 0 25px 0;
+}
+
+.authBox .form {
+    padding: 0;
+}
+
+
+/* ================= PASSWORD TOGGLE ================= */
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    margin-bottom: 0 !important;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* ================= AUTH PAGES ================= */
+.authWrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.authBox {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.authBox::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    filter: blur(70px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.authBox::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    filter: blur(70px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.authLogo {
+    font-size: 55px;
+    margin-bottom: 10px;
+    text-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
+    display: inline-block;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.authTitle {
+    color: transparent;
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: 1px;
+}
+
+.authSubtitle {
+    color: #94a3b8;
+    font-size: 15px;
+    margin: 0 0 25px 0;
+}
+
+.authBox .form {
+    padding: 0;
+}
+
+
+/* ================= PASSWORD TOGGLE ================= */
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    margin-bottom: 0 !important;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.eye-icon:hover {
+    opacity: 1;
+}
+
+/* ================= WELCOME MODAL ================= */
+.welcomeOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.4s ease;
+}
+
+.welcomeModal {
+    background: rgba(15, 23, 42, 0.95);
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(168, 85, 247, 0.2);
+    animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.welcomeTitle {
+    color: transparent;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 26px;
+    margin: 0 0 15px 0;
+    font-weight: 800;
+}
+
+.welcomeImg {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.welcomeMsg {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.closeWelcomeBtn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+    color: white;
+    width: 100%;
+}
+
+.closeWelcomeBtn:hover {
+    background: rgba(239, 68, 68, 0.8);
+    border-color: rgba(239, 68, 68, 1);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ================= SEARCH BOX ================= */
+.searchContainer {
+    padding: 0 20px 15px;
+}
+
+.searchContainer input {
+    width: 100%;
+    padding: 16px 22px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 16px;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.searchContainer input:focus {
+    outline: none;
+    border-color: #a855f7;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2), inset 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.searchContainer input::placeholder {
+    color: #64748b;
+    font-weight: 400;
+}
+
+
+/* ================= DELETE MODAL ================= */
+.modalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+}
+
+.deleteModal {
+    display: none;
+    position: fixed;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    width: 200px;
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.deleteModal h3 {
+    display: none;
+}
+
+.deleteModal .closeModalBtn {
+    display: none;
+}
+
+.deleteModal button {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.deleteModal button:last-child {
+    margin-bottom: 0;
+}
+
+.btnWarning {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.btnWarning:hover {
+    background: #d97706;
+}
+
+.btnDanger {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btnDanger:hover {
+    background: #dc2626;
+}
+
+/* ================= DELETE MODAL ================= */
+.modalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+}
+
+.deleteModal {
+    display: none;
+    position: fixed;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    width: 200px;
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.deleteModal h3 {
+    display: none;
+}
+
+.deleteModal .closeModalBtn {
+    display: none;
+}
+
+.deleteModal button {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.deleteModal button:last-child {
+    margin-bottom: 0;
+}
+
+.btnWarning {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.btnWarning:hover {
+    background: #d97706;
+}
+
+.btnDanger {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btnDanger:hover {
+    background: #dc2626;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>Chat</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+</head>
+<body>
+<div class="app chatPage">
+    <div class="uploadNav" style="height:auto;">
+        <button class="uploadBackBtn" onclick="goBack()">← Back</button>
+    </div>
+    <h2 class="chatTitle">💬 Chat</h2>
+    <div id="chatBox"></div>
+    <div class="chatInputArea">
+        <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="handleEnter(event)">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<!-- Delete Modal Overlay -->
+<div id="deleteOverlay" class="modalOverlay" onclick="closeDeleteModal()"></div>
+<!-- Delete Modal -->
+<div id="deleteModal" class="deleteModal">
+    <span class="closeModalBtn" onclick="closeDeleteModal()">&times;</span>
+    <h3>Message Options</h3>
+    <button id="btnDeleteForMe" class="btnWarning" onclick="deleteForMe()">Delete for me</button>
+    <button id="btnDeleteForEveryone" class="btnDanger" onclick="deleteForEveryone()">Delete for everyone</button>
+</div>
+
+<script src="app.js?v=4"></script>
+</body>
+</html>

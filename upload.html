@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>Upload Item</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+</head>
+<body>
+<div class="app">
+    <div class="uploadNav">
+        <button class="uploadBackBtn" onclick="goBack()">← Back</button>
+    </div>
+    <div class="uploadHeader">
+        <h2 class="uploadTitle" id="uploadTitleText">Report Item</h2>
+        <p class="uploadSubtitle" id="uploadSubtitleText">Fill in the details</p>
+    </div>
+    <div class="form">
+        <input type="file" id="imageInput" accept="image/*">
+
+<input type="text" id="itemName" placeholder="Item Name">
+
+<textarea id="description" placeholder="Detailed Description"></textarea>
+
+<input type="text" id="location" placeholder="Location">
+
+<input type="text" id="contactInfo" placeholder="Contact number or email">
+        <button onclick="submitItem()">Submit Item</button>
+    </div>
+</div>
+<script src="app.js?v=4"></script>
+</body>
+</html>

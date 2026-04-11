@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css?v=4">
+    <title>Sign Up</title>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+    <script src="firebase-init.js"></script>
+</head>
+
+<body>
+    <div class="authWrapper">
+        <div class="authBox card">
+            <div class="authLogo">✨</div>
+            <h2 class="authTitle">Create Account</h2>
+            <p class="authSubtitle">Join the lost & found community today.</p>
+            <div class="form">
+                <input type="email" id="signupEmail" placeholder="Email Address">
+                <input type="text" id="signupUsername" placeholder="Username">
+                <div class="input-group">
+                    <input type="password" id="signupPassword" placeholder="Password">
+                    <span class="eye-icon" onclick="window.togglePassword('signupPassword', this)">👁️</span>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                    <span class="eye-icon" onclick="window.togglePassword('confirmPassword', this)">👁️</span>
+                </div>
+                <button onclick="signup()">Create Account</button>
+                <p>Already have an account? <a href="login.html">Login Here</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js?v=4"></script>
+</body>
+
+</html>

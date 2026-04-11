@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>View Items</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+</head>
+<body>
+<div class="app">
+    <div class="uploadNav">
+        <button class="uploadBackBtn" onclick="goBack()">←</button>
+    </div>
+    <h2 class="pageTitle">🔎 Found Items</h2>
+    <div class="searchContainer">
+        <input type="text" id="searchBox" placeholder="🔍 Search found items..." oninput="filterItems()">
+    </div>
+    <div id="itemList"></div>
+</div>
+<script src="app.js?v=4"></script>
+<script>
+const container = document.getElementById("itemList");
+let allItems = [];
+
+// IMMEDIATELY render cached data on open so speed is 0 milliseconds!
+let cachedData = localStorage.getItem("cached_found_items");
+if (cachedData) {
+    allItems = JSON.parse(cachedData);
+    renderItems(allItems);
+} else {
+    container.innerHTML = "<p style='text-align:center;color:white;'>Loading items...</p>";
+}
+
+window.db.collection("items").where("type", "==", "found").onSnapshot(snapshot => {
+    allItems = [];
+    if(snapshot.empty) {
+        container.innerHTML = "<p style='text-align:center;color:white;'>No items reported yet.</p>";
+        localStorage.removeItem("cached_found_items");
+        return;
+    }
+    snapshot.forEach(doc => {
+        allItems.push({ id: doc.id, ...doc.data() });
+    });
+    
+    // Save to cache for the next time the app is opened
+    localStorage.setItem("cached_found_items", JSON.stringify(allItems));
+    
+    // Maintain the active filter if there is one
+    filterItems();
+});
+
+function renderItems(items) {
+    container.innerHTML = "";
+    if (items.length === 0) {
+        container.innerHTML = "<p style='text-align:center;color:white;'>No items found matching your search.</p>";
+        return;
+    }
+    items.forEach(item => {
+        container.innerHTML += `
+            <div class="card">
+                <img src="${item.image}" width="100%">
+                <h3>Item : ${item.name}</h3>
+                <small>Description: ${item.desc}</small><br>
+                <small>📍 ${item.location}</small><br>
+                <small class="owner">👤 Posted by: ${item.uploadedBy || "Unknown"}</small>
+                ${item.uploadedBy !== localStorage.getItem("loggedInUser") ? `<button onclick="openChat('${item.uploadedBy}')">💬 Chat Owner</button>` : `<button class="menuBtn" style="pointer-events:none;opacity:0.5;">Your Item</button>`}
+                ${item.uploadedBy === localStorage.getItem("loggedInUser") ? `<button class="deleteBtn" onclick="deleteItem('${item.id}')">✅ Item Returned</button>` : ""}
+            </div>
+        `;
+    });
+}
+
+function filterItems() {
+    const query = document.getElementById("searchBox").value;
+    if (!query) {
+        renderItems(allItems);
+        return;
+    }
+    
+    const filtered = allItems.filter(item => 
+        window.fuzzyIncluded(query, item.name || "") ||
+        window.fuzzyIncluded(query, item.desc || "") ||
+        window.fuzzyIncluded(query, item.location || "")
+    );
+    renderItems(filtered);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>Match Suggestions</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+</head>
+<body>
+<div class="app">
+    <div class="matchNav">
+        <button class="navBtn backBtn" onclick="goBack()">←</button>
+        <button class="navBtn homeBtn" onclick="goHome()">🏠</button>
+    </div>
+    <h2 class="matchTitle">⭐ Possible Matches</h2>
+    <div class="contentArea">
+        <div id="matchList"></div>
+    </div>
+</div>
+<script src="app.js?v=4"></script>
+<script>
+const container = document.getElementById("matchList");
+const lastItem = JSON.parse(localStorage.getItem("lastUploadedItem"));
+
+function goBack(){ window.history.back(); }
+function goHome(){ window.location.href = "index.html"; }
+
+if(!lastItem){
+    container.innerHTML = "<p style='color:white;text-align:center;'>No matches yet.</p>";
+}else{
+    window.db.collection("items").get().then(snapshot => {
+        let itemsList = [];
+        snapshot.forEach(doc => {
+            let data = doc.data();
+            data.id = doc.id;
+            itemsList.push(data);
+        });
+
+        const matches = findMatches(lastItem, itemsList);
+
+        if(matches.length === 0){
+            container.innerHTML = `
+                <p style="color:white;text-align:center;">No similar items found.</p>
+                <button class="menuBtn" onclick="goHome()">Return to Dashboard</button>
+            `;
+        }else{
+            container.innerHTML = "";
+            matches.forEach(match => {
+                container.innerHTML += `
+                    <div class="cardContainer">
+                        <div class="card">
+                            <img src="${match.image}">
+                            <h3> Name: ${match.name}</h3>
+                            <small class="owner">Description: ${match.desc || ""}</small><br>
+                            <small class="owner">📍 ${match.location || "Unknown location"}</small><br>
+                            <small class="owner">👤 Posted by: ${match.uploadedBy || "Unknown"}</small>
+                            ${match.uploadedBy !== localStorage.getItem("loggedInUser") ? `<button onclick="openChat('${match.uploadedBy}')">💬 Chat Owner</button>` : `<button class="menuBtn" style="pointer-events:none;opacity:0.5;">Your Item</button>`}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    });
+}
+</script>
+</body>
+</html>

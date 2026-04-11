@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=4">
+<title>Login</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+<script src="firebase-init.js"></script>
+</head>
+<body>
+<div class="authWrapper">
+    <div class="authBox card">
+        <div class="authLogo">👋</div>
+        <h2 class="authTitle">Welcome Back</h2>
+        <p class="authSubtitle">Login to find what you lost!</p>
+        <div class="form">
+            <input type="email" id="loginEmail" placeholder="Email Address">
+            <div class="input-group">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <span class="eye-icon" onclick="window.togglePassword('loginPassword', this)">👁️</span>
+            </div>
+            <button onclick="login()">Login to Account</button>
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+<script src="auth.js?v=4"></script>
+<script>
+if(localStorage.getItem("loggedInUser")){ window.location.href = "index.html"; }
+</script>
+</body>
+</html>

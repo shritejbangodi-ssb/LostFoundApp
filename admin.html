@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css?v=5">
+<title>Admin Dashboard</title>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
+<style>
+.adminContainer { padding: 20px; }
+.adminTable { width: 100%; border-collapse: collapse; margin-top: 15px; }
+.adminTable th, .adminTable td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; }
+.adminTable th { background: rgba(255,255,255,0.05); color: #cbd5e1; }
+.delBtn { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; padding: 6px 12px; border-radius: 8px; color: #ef4444; cursor: pointer; transition: 0.3s; font-weight: bold; }
+.delBtn:hover { background: #ef4444; color: white; transform: scale(1.05); }
+.sectionCard {
+    background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px; margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+<body>
+<script>
+if(localStorage.getItem("loggedInUser") !== "admin"){
+    alert("Unauthorized Access! Only the administrator can view this page.");
+    window.location.href = "index.html";
+}
+</script>
+
+<div class="app adminPage" style="max-width: 800px;">
+    <div class="uploadNav">
+        <button class="uploadBackBtn" onclick="window.history.back()">← Dashboard</button>
+    </div>
+    
+    <h2 class="pageTitle">🛡️ Admin Panel</h2>
+
+    <div class="adminContainer">
+        <!-- Users Section -->
+        <div class="sectionCard">
+            <h3 style="color:#a855f7; margin-top:0;">📋 Registered Users</h3>
+            <div style="overflow-x:auto;">
+                <table class="adminTable">
+                    <thead><tr><th>Username</th><th>Action</th></tr></thead>
+                    <tbody id="userTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Items Section -->
+        <div class="sectionCard">
+            <h3 style="color:#ec4899; margin-top:0;">📦 All Tracked Items</h3>
+            <div style="overflow-x:auto;">
+                <table class="adminTable">
+                    <thead><tr><th>Type</th><th>Name</th><th>Uploader</th><th>Action</th></tr></thead>
+                    <tbody id="itemTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="app.js?v=5"></script>
+<script>
+// Load Users
+window.db.collection("users").onSnapshot(snapshot => {
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = "";
+    snapshot.forEach(doc => {
+        const username = doc.id;
+        tbody.innerHTML += `
+            <tr>
+                <td>${username} ${username==='admin' ? '<span style="color:#a855f7; font-size:12px;">(Admin)</span>' : ''}</td>
+                <td>${username!=='admin' ? `<button class="delBtn" onclick="deleteUser('${username}')">BAN USER</button>` : ''}</td>
+            </tr>
+        `;
+    });
+}, err => { alert("Failed to fetch users: " + err); });
+
+// Load Items
+window.db.collection("items").onSnapshot(snapshot => {
+    const tbody = document.getElementById("itemTableBody");
+    tbody.innerHTML = "";
+    snapshot.forEach(doc => {
+        const item = doc.data();
+        const typeBadge = item.type === 'lost' ? '<span style="color:#ef4444;">🔴 Lost</span>' : '<span style="color:#10b981;">🟢 Found</span>';
+        tbody.innerHTML += `
+            <tr>
+                <td>${typeBadge}</td>
+                <td>${item.name}</td>
+                <td><span style="color:#a855f7;">@${item.uploadedBy || 'Unknown'}</span></td>
+                <td><button class="delBtn" onclick="deleteAnyItem('${doc.id}')">DELETE ITEM</button></td>
+            </tr>
+        `;
+    });
+}, err => { alert("Failed to fetch items: " + err); });
+
+// Admin Delete Methods
+function deleteUser(username) {
+    if(confirm(`Are you absolutely sure you want to permanently delete the account '${username}'?`)){
+        window.db.collection("users").doc(username).delete()
+            .then(() => console.log("User Deleted!"))
+            .catch(e => alert("Permission Denied: " + e));
+    }
+}
+
+function deleteAnyItem(id) {
+    if(confirm("Are you absolutely sure you want to forcibly delete this global item?")){
+        window.db.collection("items").doc(id).delete()
+            .then(() => console.log("Item Deleted!"))
+            .catch(e => alert("Permission Denied: " + e));
+    }
+}
+</script>
+</body>
+</html>
